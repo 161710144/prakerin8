@@ -2,7 +2,7 @@
 <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
                 <a href="#">
-                    <img src="/assets/admin/images/icon/logo.png" alt="Cool Admin" />
+                    <img src="/assets/admin/images/icon/loker2.jpg" alt="Loker Bandung" style="max-height:65px;max-width:150px;margin-top:7px;" />
                 </a>
             </div>
             <div class="menu-sidebar__content js-scrollbar1">

@@ -26,9 +26,6 @@ class User extends Authenticatable
     public function Perusahaan(){
         return $this->HasMany('App\Perusahaan','user_id');
     }
-    public function Lamaran(){
-        return $this->HasMany('App\Lamaran','user_id');
-    }
 
     /**
      * The attributes that should be hidden for arrays.

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Perusahaan;
 use App\User;
 use Session;
+use File;
 use Illuminate\Http\Request;
 
 class PerusahaanController extends Controller
@@ -61,13 +62,21 @@ class PerusahaanController extends Controller
         $per->tgl_mulai = $request->tgl_mulai;
         $per->email = $request->email;
         $per->telepon = $request->telepon;
-        $per->user_id = $request->user_id;
-        
+        $per->user_id = $request->user_id;    
         $per->save();
         Session::flash("flash_notification", [
         "level"=>"success",
         "message"=>"Berhasil menyimpan <b>$per->logo</b>"
         ]);
+        // upload
+        if ($request->hasFile('logo')) {
+            $file = $request->file('logo');
+            $filename = str_random(6).'_'.$file->getClientOriginalName();
+            $destinationPath = public_path().'/assets/img/logopers/';
+            $uploadSucces = $file->move($destinationPath, $filename);
+            $per->logo = $filename;
+        }
+        $per->save();
         return redirect()->route('perusahaan.index');
     }
 
@@ -135,6 +144,25 @@ class PerusahaanController extends Controller
         "level"=>"success",
         "message"=>"Berhasil mengedit <b>$per->logo</b>"
         ]);
+        //edit upload foto
+        if ($request->hasFile('logo')){
+            $file = $request->file('logo');
+            $destinationPath = public_path().'/assets/img/logopers/';
+            $filename = str_random(6).'_'.$file->getClientOriginalName();
+            $uploadSucces = $file->move($destinationPath, $filename);
+
+            //hapus foto lama
+            if ($per->logo){
+                $old_logo = $per->logo;
+                $filepath = public_path() . DIRECTORY_SEPARATOR . '/assets/img/logopers/' . DIRECTORY_SEPARATOR .$per->logo;
+                try{
+                    File::delete($filepath);
+                }catch (FileNotFoundException $p){
+                    //file sudah dihapus
+                }
+            }
+            $per->logo = $filename;
+        }
         return redirect()->route('perusahaan.index');
     }
 

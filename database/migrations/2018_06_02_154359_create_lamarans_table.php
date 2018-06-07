@@ -19,8 +19,6 @@ class CreateLamaransTable extends Migration
             $table->string('status');
             $table->unsignedInteger('low_id');
             $table->foreign('low_id')->references('id')->on('lowongans')->onDelete('cascade');
-            $table->unsignedInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

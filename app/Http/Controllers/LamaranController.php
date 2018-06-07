@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Session;
 use App\Lowongan;
-use App\User;
 use App\Lamaran;
 use Illuminate\Http\Request;
 
@@ -17,7 +16,7 @@ class LamaranController extends Controller
      */
     public function index()
     {
-        $lar = Lamaran::with('Lowongan','User')->get();
+        $lar = Lamaran::with('Lowongan')->get();
         return view('lamaran.index',compact('lar'));
     }
 
@@ -28,8 +27,8 @@ class LamaranController extends Controller
      */
     public function create()
     {
-         $us = User::all();
-        return view('lamaran.create',compact('us'));
+        $low = Lowongan::all();
+        return view('lamaran.create',compact('low'));
     }
 
     /**
@@ -43,20 +42,16 @@ class LamaranController extends Controller
         $this->validate($request,[
             'file_cv' => 'required|',
             'status' => 'required|',
-            'low_id' => 'required|',
-            'user_id' => 'required|'
+            'low_id' => 'required|'
         ]);
         $lar = new Lamaran;
         $lar->file_cv = $request->file_cv;
         $lar->status = $request->status;
         $lar->low_id = $request->low_id;
-        $lar->user_id = $request->user_id;
         $lar->save();
-        // attach fungsinya untuk melampirkan data,yang dilampirkan disini ialah data dari method Pesanan
-        //  yang ada di model pengantin
         Session::flash("flash_notification", [
         "level"=>"success",
-        "message"=>"Berhasil menyimpan <b>$per->file_cv</b>"
+        "message"=>"Berhasil menyimpan <b>$lar->file_cv</b>"
         ]);
         return redirect()->route('lamaran.index');
     }
@@ -67,7 +62,7 @@ class LamaranController extends Controller
      * @param  \App\Lamaran  $lamaran
      * @return \Illuminate\Http\Response
      */
-    public function show(Lamaran $lamaran)
+    public function show($id)
     {
         $lar = Lamaran::findOrFail($id);
         return view('lamaran.show',compact('lar'));
@@ -79,14 +74,12 @@ class LamaranController extends Controller
      * @param  \App\Lamaran  $lamaran
      * @return \Illuminate\Http\Response
      */
-    public function edit(Lamaran $lamaran)
+    public function edit($id)
     {
         $lar = Lamaran::findOrFail($id);
-        $low   = Lowongan::all();
-        $us= User::all();
-        $selectedus = Perusahaan::findOrFail($id)->user_id;
-        // dd($selected);
-        return view('perusahaan.edit',compact('lar','per','low','selectedlow','selectedus'));
+        $low = Lowongan::all();
+        $selectedlar = Lamaran::findOrFail($id)->low_id;
+         return view('lamaran.edit',compact('lar','low','selectedlar'));
     }
 
     /**
@@ -96,23 +89,21 @@ class LamaranController extends Controller
      * @param  \App\Lamaran  $lamaran
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Lamaran $lamaran)
+    public function update(Request $request, $id)
     {
          $this->validate($request,[
             'file_cv' => 'required|',
             'status' => 'required|',
-            'low_id' => 'required|',
-            'user_id' => 'required|'
+            'low_id' => 'required|'
         ]);
         $lar = Lamaran::findOrFail($id);
         $lar->file_cv = $request->file_cv;
         $lar->status = $request->status;
         $lar->low_id = $request->low_id;
-        $lar->user_id = $request->user_id;
         $lar->save();
         Session::flash("flash_notification", [
         "level"=>"success",
-        "message"=>"Berhasil menyimpan <b>$per->file_cv</b>"
+        "message"=>"Berhasil menyimpan <b>$lar->file_cv</b>"
         ]);
         return redirect()->route('lamaran.index');
 
@@ -124,7 +115,7 @@ class LamaranController extends Controller
      * @param  \App\Lamaran  $lamaran
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Lamaran $lamaran)
+    public function destroy($id)
     {
         $lar = Lamaran::findOrFail($id);
         $lar->delete();

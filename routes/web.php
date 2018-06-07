@@ -19,12 +19,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('user','UserController');
 
-Route::get('/cekuk', function () {
-    return view('layouts.admin');
-});
 Route::group(['prefix'=>'admin','middleware'=>['auth','role:admin']],function(){
+	Route::resource('user','UserController');
 	Route::resource('member','MemberController');
 	Route::resource('perusahaan','PerusahaanController');
 	Route::resource('lowongan','LowonganController');

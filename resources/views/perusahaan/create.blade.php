@@ -9,11 +9,11 @@
 			  	</div>
 			  </div>
 			  <div class="panel-body">
-			  	<form action="{{ route('perusahaan.store') }}" method="post" >
+			  	<form action="{{ route('perusahaan.store') }}" method="post" enctype="multipart/form-data">
 			  		{{ csrf_field() }}
 			  		<div class="form-group {{ $errors->has('logo') ? ' has-error' : '' }}">
 			  			<label class="control-label">Logo</label>	
-			  			<input type="text" name="logo" class="form-control"  required>
+			  			<input type="file" name="logo" class="form-control"  required>
 			  			@if ($errors->has('logo'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('logo') }}</strong>

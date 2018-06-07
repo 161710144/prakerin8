@@ -10,7 +10,7 @@
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-    <title>Dashboard</title>
+    <title>LokerBandung</title>
 
     <!-- Fontfaces CSS-->
     <link href="{{ asset('assets/admin/css/font-face.css') }}" rel="stylesheet" media="all">
@@ -43,29 +43,22 @@
     <!-- MENU SIDEBAR-->
 
         <!-- END MENU SIDEBAR-->
-
+ 
         <body class="animsition">
-                    <div class="page-wrapper">
-                        
-                        <!--HEADER MOBILE-->
-                        @include('partials.nav-mobile')
-                        <!--END HEADER MOBILE-->
-                        <!--MENU SIDEBAR-->
-                        @include('partials.sidebar')
-                        <!--END MENU SIDEBAR-->
-        <!-- PAGE CONTAINER-->
-        <div class="page-container">
+            <div class="page-container">
                         @include('partials.header')
-                         
-            <!-- MAIN CONTENT-->
-            <div class="main-content">
+                        <div class="main-content">
                             @yield('content')
+                    <div class="page-wrapper">
+                        @include('partials.sidebar')
+            
                 
             <!-- END MAIN CONTENT-->
             <!-- END PAGE CONTAINER-->
         </div>
 
     </div>
+</div>
 
     <!-- Jquery JS-->
     <script src="{{ asset('assets/admin/vendor/jquery-3.2.1.min.js') }}"></script>

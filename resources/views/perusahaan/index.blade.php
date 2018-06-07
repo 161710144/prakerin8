@@ -3,10 +3,11 @@
 
 	<div class="row">
 	<div class="container">
-	<div class="col-md-16">
-			<div class="panel panel-danger">
-			  <div class="panel-heading"><font color ="blue">Data perusahaan </font>
-			  	<div class="panel-title pull-right"><a href="{{ route('perusahaan.create') }}">Tambah</a>
+		<div class="col-md-16">
+			<div class="panel panel-primary">
+			  <div class="panel-heading"><font color ="blue"><h2>Data perusahaan </h2></font>
+			  	<button class="au-btn au-btn-icon au-btn--green au-btn--small"><i class="zmdi zmdi-plus"><a href="{{ route('perusahaan.create') }}">Tambah</i></a></button>
+			  	<div class="panel-title pull-right">
 			  	</div>
 			  </div>
 			  <div class="panel-body">
@@ -34,12 +35,12 @@
 				  		@foreach($per as $data)
 				  	  <tr>
 				    	<td>{{ $no++ }}</td>
-				    	<td>{{ $data->logo }}</td>
+				    	<td><img src="{{ asset('assets/img/logopers/'.$data->logo) }}" style="max-height:150px;max-width:150px;margin-top:7px;" /></td>
 				    	<td>{{ $data->deskripsi }}</td>
 				    	<td>{{ $data->kategori }}</td>
 				    	<td>{{ $data->subkategori }}</td>
 				    	<td>{{ $data->judul }}</td>
-				    	<td>{{ $data->gaji }}</td>
+				    	<td>Rp.{{ $data->gaji }}</td>
 				    	<td>{{ $data->tgl_mulai }}</td>
 				    	<td>{{ $data->email }}</td>
 				    	<td>{{ $data->telepon }}</td>
